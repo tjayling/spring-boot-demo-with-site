@@ -46,56 +46,65 @@
       <!-- Read all cars -->
 
       <section>
-        <p style="text-align: left; padding-left: 6px">All cars:</p>
-        <div class="car-table" id="all-cars">
-          <table id="read-all-table">
-            <thead class="table-header">
-              <tr>
-                <th>ID</th>
-                <th>Model</th>
-                <th>Make</th>
-                <th>Price(£)</th>
-              </tr>
-            </thead>
-            <tbody id="all-cars-body"></tbody>
-          </table>
+        <!-- <p style="display: inline; width: auto">All cars:</p> -->
+
+        <div id="read-all-container">
+          <select
+          id="read-all-select"
+            onchange="activateReadBy()"
+            style="margin: 6px"
+          >
+            <option value="read-all" selected>Read all cars</option>
+            <option value="read-by">Read cars by</option>
+          </select>
         </div>
-      </section>
 
-      <!-- Read car by value -->
+        <div id="read-by-container">
+          <!-- Read all/by select box -->
+          <select
+          id="read-by-select"
+            onchange="activateReadAll()"
+            style="margin-left: 6px"
+          >
+            <option value="read-all">Read all cars</option>
+            <option value="read-by" selected>Read cars by</option>
+          </select>
 
-      <section>
-        <p style="padding-left: 6px; display: inline; width: auto">
-          Select car by
-        </p>
-        <select id="main-options" name="read-by" onchange="changeDatalist()">
-          <option value="id">ID</option>
-          <option value="make">Make</option>
-          <option value="model">Model</option>
-          <!-- <option value="cost">Price</option> -->
-        </select>
-        <br />
+          <!-- read by select box -->
+          <select id="main-options" name="read-by" onchange="changeDatalist()">
+            <option value="id">ID</option>
+            <option value="make">Make</option>
+            <option value="model">Model</option>
+            <!-- <option value="cost">Price</option> -->
+          </select>
+          <br />
 
-        <div id="datalist-container">
-        <input list="sub-options" id="sub-options-value" size="10" placeholder="Start typing..."/>
-        <!--  -->
-          <datalist id="sub-options"></datalist>
-        <!--  -->
+          <div id="datalist-container">
+            <input
+              list="sub-options"
+              id="sub-options-value"
+              size="10"
+              placeholder="Start typing..."
+              onclick="clearInput()"
+            />
+            <datalist id="sub-options"></datalist>
 
-        <button class="btn" onclick="readBy();">Select cars</button>
-      </div>
-        <!-- Div with table to show results -->
-        <div class="car-table" id="some-cars">
-          <table id="read-by-table">
+            <button class="btn" onclick="readBy();">Select cars</button>
+          </div>
+        </div>
+
+        <div class="car-table" id="all-cars">
+          <table>
             <thead class="table-header">
               <tr>
                 <th>ID</th>
                 <th>Model</th>
                 <th>Make</th>
                 <th>Price(£)</th>
+                <th>Select</th>
               </tr>
             </thead>
-            <tbody id="read-by-cars-body"></tbody>
+            <tbody id="car-table-body"></tbody>
           </table>
         </div>
       </section>

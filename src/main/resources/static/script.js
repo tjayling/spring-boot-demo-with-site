@@ -3,7 +3,34 @@
 // Global variable for the possible datalists
 let datalists = [];
 let activeDatalist;
+
 // Runs on init
+function init() {
+  // Hide the read by options on load
+  document.getElementById("read-by-container").style.display = "none";
+  readAll();
+}
+
+// De-activates the read-all container and enables the read by options
+function activateReadBy() {
+  document.getElementById("read-all-container").style.display = "none";
+  document.getElementById("read-by-container").style.display = "block";
+  document.getElementById("read-by-select").value = "read-by";
+}
+
+// De-activates the read-by container and enables the read all select box
+function activateReadAll() {
+  document.getElementById("read-all-container").style.display = "block";
+  document.getElementById("read-by-container").style.display = "none";
+  document.getElementById("read-all-select").value = "read-all";
+  readAll();
+}
+
+function clearInput() {
+  console.log(document.getElementById("sub-options-value").value)
+  document.getElementById("sub-options-value").value = ``;
+}
+
 // Reads all cars and updates global make and model arrays
 function readAll() {
   fetch(`http://localhost:8080/car/readAll`)
@@ -33,7 +60,6 @@ function createCar() {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.table(data);
       readAll();
     })
     .then()
@@ -68,12 +94,11 @@ function readBy() {
 
 function addListItems(data, table) {
   let newTableBody = document.createElement("tbody");
-  newTableBody.id = `${table}-cars-body`;
+  newTableBody.id = `car-table-body`;
   for (let i in data) {
     let tableRow = document.createElement(`tr`);
     newTableBody.appendChild(tableRow);
     tableRow.id = `row${data[i][`id`]}`;
-    // console.table(data);
     for (let d in data[i]) {
       let tableData = document.createElement(`td`);
       if (d !== `cost`) {
@@ -84,7 +109,7 @@ function addListItems(data, table) {
       tableRow.appendChild(tableData);
     }
   }
-  let oldTableBody = document.getElementById(`${table}-cars-body`);
+  let oldTableBody = document.getElementById(`car-table-body`);
   oldTableBody.parentNode.replaceChild(newTableBody, oldTableBody);
 }
 
@@ -94,7 +119,6 @@ function changeDatalist() {
   // Select the user's option from the DOM
   let select = document.getElementById(`main-options`);
   let option = select.options[select.selectedIndex].value;
-  console.log(option);
   if (activeDatalist !== option) {
     /*global*/ activeDatalist = option;
     let oldDatalist = document.getElementById(`sub-options`);
@@ -135,9 +159,6 @@ function generateDatalists(data) {
     modelOption.appendChild(document.createTextNode(`${model}`));
     modelDatalist.appendChild(modelOption);
   }
-  console.log(idDatalist);
-  console.log(makeDatalist);
-  console.log(modelDatalist);
   return {
     id: idDatalist,
     make: makeDatalist,
@@ -151,7 +172,6 @@ function getMakes(data) {
     let make = data[i][`make`];
     if (!makes.includes(make)) {
       makes.push(make);
-      //   console.log(make);
     }
   }
   return makes;
@@ -163,72 +183,11 @@ function getModels(data) {
     let model = data[i][`model`];
     if (!models.includes(model)) {
       models.push(model);
-      //   console.error(model);
     }
   }
   return models;
 }
 
 (function () {
-  document.addEventListener("DOMContentLoaded", readAll);
+  document.addEventListener("DOMContentLoaded", init);
 })();
-
-///////////////////////////////////////////////////////
-
-/*
-function populateReadByDatalist(data) {
-  // Unpopulate existing options from select
-
-  let datalists = generateDatalists(data);
-
-  let idOptions;
-
-  let oldDataList = document.getElementById(`sub-options`);
-
-  console.log(oldDataList.options);
-  if (oldDataList.children.length > 0) {
-    for (let i = oldDataList.options.length; i >= 0; i--) {
-      oldDataList.removeChild(oldDataList.options[i]);
-      // ERRORS!!!!!!!!!!
-    }
-  }
-
-  let mainSelect = document.getElementById(`main-options`);
-  let datalist = document.getElementById(`sub-options`);
-
-  console.log(datalist);
-
-  if (mainSelect.options[mainSelect.selectedIndex].value == `id`) {
-    for (let i in data) {
-      let option = document.createElement(`option`);
-      option.value = `${data[i][`id`]}`;
-      option.appendChild(document.createTextNode(`${data[i][`id`]}`));
-      datalist.appendChild(option);
-    }
-  } else if (mainSelect.options[mainSelect.selectedIndex].value == `make`) {
-    // Generate list of all makes in the database
-    let makes = getMakes(data);
-    // Iterate over array
-    for (let make of makes) {
-      // Create a new option for each make in the database
-      let option = document.createElement(`option`);
-      option.value = `${make}`;
-      option.appendChild(document.createTextNode(`${make}`));
-      datalist.appendChild(option);
-    }
-  } else if (mainSelect.options[mainSelect.selectedIndex].value == `model`) {
-    // Generate list of all makes in the database
-    let models = getModels(data);
-    // Iterate over array
-    for (let model of models) {
-      // Create a new option for each make in the database
-      let option = document.createElement(`option`);
-      option.value = `${model}`;
-      option.appendChild(document.createTextNode(`${model}`));
-      datalist.appendChild(option);
-    }
-  }
-}
-*/
-
-///////////////////////////////////////////////////////

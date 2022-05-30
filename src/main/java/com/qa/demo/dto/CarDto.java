@@ -1,7 +1,5 @@
 package com.qa.demo.dto;
 
-import com.qa.demo.dao.Driver;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

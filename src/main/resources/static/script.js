@@ -27,7 +27,7 @@ function activateReadAll() {
 }
 
 function clearInput() {
-  console.log(document.getElementById("sub-options-value").value)
+  console.log(document.getElementById("sub-options-value").value);
   document.getElementById("sub-options-value").value = ``;
 }
 
@@ -40,7 +40,7 @@ function readAll() {
         return;
       }
       response.json().then((data) => {
-        addListItems(data, `all`);
+        addListItems(data);
         /*global*/ datalists = generateDatalists(data);
         changeDatalist(activeDatalist);
       });
@@ -51,7 +51,7 @@ function readAll() {
 // Create car function
 function createCar() {
   let make = document.getElementById(`get-make`).value;
-  let model = document.getElementById(`get-cost`).value;
+  let model = document.getElementById(`get-model`).value;
   let cost = document.getElementById(`get-cost`).value;
   fetch(`http://localhost:8080/car/create`, {
     method: `post`,
@@ -59,10 +59,7 @@ function createCar() {
     body: JSON.stringify({ model: model, cost: cost, make: make }),
   })
     .then((response) => response.json())
-    .then((data) => {
-      readAll();
-    })
-    .then()
+    .then((data) => readAll())
     .catch((error) => console.error(`Request failed: ${error}`));
 }
 
@@ -86,14 +83,14 @@ function readBy() {
         return;
       }
       response.json().then((data) => {
-        addListItems(data, `read-by`);
+        addListItems(data);
       });
     })
     .catch((error) => console.error(`Request failed: ${error}`));
 }
 
-function addListItems(data, table) {
-  let newTableBody = document.createElement("tbody");
+function addListItems(data) {
+  let newTableBody = document.createElement(`tbody`);
   newTableBody.id = `car-table-body`;
   for (let i in data) {
     let tableRow = document.createElement(`tr`);
@@ -108,6 +105,11 @@ function addListItems(data, table) {
       }
       tableRow.appendChild(tableData);
     }
+    let checkBox = document.createElement(`input`);
+    checkBox.type = `checkbox`;
+    checkBox.id = `car-${data[i][`id`]}`;
+    checkBox.onclick = showMoreOptions();
+    tableRow.appendChild(checkBox);
   }
   let oldTableBody = document.getElementById(`car-table-body`);
   oldTableBody.parentNode.replaceChild(newTableBody, oldTableBody);

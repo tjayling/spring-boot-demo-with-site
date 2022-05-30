@@ -33,16 +33,6 @@
     </header>
 
     <main style="display: flex">
-      <!-- Create new car -->
-
-      <section>
-        <p>Create a new car:</p>
-        <input type="text" id="get-make" placeholder="Make" /><br />
-        <input type="text" id="get-model" placeholder="Model" /> <br />
-        <input type="text" id="get-cost" placeholder="Price of car" /><br />
-        <button onclick="createCar()">Add Car</button>
-      </section>
-
       <!-- Read all cars -->
 
       <section>
@@ -50,9 +40,9 @@
 
         <div id="read-all-container">
           <select
-          id="read-all-select"
+            id="read-all-select"
             onchange="activateReadBy()"
-            style="margin: 6px"
+            style="margin-bottom: 6px"
           >
             <option value="read-all" selected>Read all cars</option>
             <option value="read-by">Read cars by</option>
@@ -62,9 +52,8 @@
         <div id="read-by-container">
           <!-- Read all/by select box -->
           <select
-          id="read-by-select"
+            id="read-by-select"
             onchange="activateReadAll()"
-            style="margin-left: 6px"
           >
             <option value="read-all">Read all cars</option>
             <option value="read-by" selected>Read cars by</option>
@@ -88,25 +77,38 @@
               onclick="clearInput()"
             />
             <datalist id="sub-options"></datalist>
-
             <button class="btn" onclick="readBy();">Select cars</button>
           </div>
         </div>
 
-        <div class="car-table" id="all-cars">
+        <!-- Car table container div  -->
+        <div class="car-table-container" id="all-cars">
           <table>
             <thead class="table-header">
               <tr>
                 <th>ID</th>
                 <th>Model</th>
                 <th>Make</th>
-                <th>Price(£)</th>
+                <th>Price</th>
                 <th>Select</th>
               </tr>
             </thead>
             <tbody id="car-table-body"></tbody>
           </table>
         </div>
+
+
+
+      </section>
+
+      <!-- Create new car -->
+
+      <section>
+        <p>Create a new car:</p>
+        <input type="text" id="get-make" placeholder="Make" /><br />
+        <input type="text" id="get-model" placeholder="Model" /> <br />
+        <input type="text" id="get-cost" placeholder="Price of car" /><br />
+        <button onclick="createCar()">Add Car</button>
       </section>
     </main>
     <script src="script.js"></script>

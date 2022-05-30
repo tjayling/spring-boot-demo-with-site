@@ -1,11 +1,10 @@
-package com.qa.demo.dao;
+ package com.qa.demo.dao;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+//@Entity
 public class CarSimple {
 
 	@Id
@@ -25,7 +24,6 @@ public class CarSimple {
 	
 	public CarSimple(String make) {
 		this.make = make;
-		System.out.println("CarSimple created");
 	}
 	
 	public CarSimple(String model, int wheels, String make) {
@@ -33,7 +31,6 @@ public class CarSimple {
 		this.model = model;
 		this.wheels = wheels;
 		this.make = make;
-		System.out.println("CarSimple created");
 	}
 	
 	public CarSimple(Long id, String model, int wheels, String make) {
@@ -42,7 +39,6 @@ public class CarSimple {
 		this.model = model;
 		this.wheels = wheels;
 		this.make = make;
-		System.out.println("CarSimple created");
 	}
 	
 	public CarSimple get() {

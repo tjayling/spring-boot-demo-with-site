@@ -39,20 +39,8 @@
         <p>Create a new car:</p>
         <input type="text" id="get-make" placeholder="Make" /><br />
         <input type="text" id="get-model" placeholder="Model" /> <br />
-        <input
-          type="text"
-          id="get-wheels"
-          placeholder="Number of wheels"
-        /><br />
-        <button
-          onclick="
-        let make = document.getElementById(`get-make`).value;
-        let model = document.getElementById(`get-model`).value;
-        let wheels = document.getElementById(`get-wheels`).value;
-        createCar(make, model, wheels)"
-        >
-          Add Car
-        </button>
+        <input type="text" id="get-cost" placeholder="Price of car" /><br />
+        <button onclick="createCar()">Add Car</button>
       </section>
 
       <!-- Read all cars -->
@@ -61,12 +49,14 @@
         <p style="text-align: left; padding-left: 6px">All cars:</p>
         <div class="car-table" id="all-cars">
           <table id="read-all-table">
-            <tr class="tableHeader">
-              <th>ID</th>
-              <th>Make</th>
-              <th>Wheels</th>
-              <th>Model</th>
-            </tr>
+            <thead class="table-header">
+              <tr>
+                <th>ID</th>
+                <th>Model</th>
+                <th>Make</th>
+                <th>Price(£)</th>
+              </tr>
+            </thead>
             <tbody id="all-cars-body"></tbody>
           </table>
         </div>
@@ -75,34 +65,36 @@
       <!-- Read car by value -->
 
       <section>
-        <p style="text-align: left; padding-left: 6px">Select car by:</p>
-        <select id="main-options" name="read-by" onchange="readAll()">
+        <p style="padding-left: 6px; display: inline; width: auto">
+          Select car by
+        </p>
+        <select id="main-options" name="read-by" onchange="changeDatalist()">
           <option value="id">ID</option>
           <option value="make">Make</option>
           <option value="model">Model</option>
-          <option value="wheels">Wheels</option>
+          <!-- <option value="cost">Price</option> -->
         </select>
-        <select id="sub-options"></select>
-        <button
-          onclick="
-          let mainSelect = document.getElementById(`main-options`);
-          let mainOption = mainSelect.options[mainSelect.selectedIndex].value;
-          
-          let subSelect = document.getElementById(`sub-options`);
-          let subOption = subSelect.options[subSelect.selectedIndex].value;
-          readBy(mainOption, subOption);"
-        >
-          Select cars
-        </button>
+        <br />
+
+        <div id="datalist-container">
+        <input list="sub-options" id="sub-options-value" size="10" placeholder="Start typing..."/>
+        <!--  -->
+          <datalist id="sub-options"></datalist>
+        <!--  -->
+
+        <button class="btn" onclick="readBy();">Select cars</button>
+      </div>
         <!-- Div with table to show results -->
         <div class="car-table" id="some-cars">
           <table id="read-by-table">
-            <tr class="tableHeader">
-              <th>ID</th>
-              <th>Make</th>
-              <th>Wheels</th>
-              <th>Model</th>
-            </tr>
+            <thead class="table-header">
+              <tr>
+                <th>ID</th>
+                <th>Model</th>
+                <th>Make</th>
+                <th>Price(£)</th>
+              </tr>
+            </thead>
             <tbody id="read-by-cars-body"></tbody>
           </table>
         </div>

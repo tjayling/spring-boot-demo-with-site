@@ -27,7 +27,17 @@ body {
 
 body {
   font-family: "Koulen", cursive;
-  background-color: #ffffff;
+  /* background-color: #000000; */
+  /* color: #e46fb3; */
+}
+
+select {
+  font-family: "Koulen", cursive;
+  top: -10px;
+  background-color: lightgrey;
+  text-align: center;
+  border-radius: 5px;
+  padding:0;
 }
 
 section {
@@ -37,20 +47,23 @@ section {
 th {
   padding-left: 5px;
   padding-right: 5px;
+  margin: 0;
   font-size: 17px;
 }
 
-tr.tableHeader {
+thead.table-header {
   position: sticky;
   top: 0;
-  background: white;
+  left: 0;
+  background: #ffffff;
+  margin: 0;
 }
 
 div.car-table {
-  border-style: solid;
+  border: solid 2px;
   text-align: center;
   padding: 10px;
-  width: 200px;
+  width: 220px;
   height: 300px;
   overflow: auto;
   border-radius: 5px;
@@ -127,12 +140,12 @@ footer {
 .btn {
   display: inline-block;
   position: relative;
-  margin: 5px;
+  margin: 7px;
   padding: 2px;
   border-radius: 2px;
   text-decoration: none;
   outline-style: solid;
-  outline-width: 2px;
+  outline-width: 0px;
   transition: all 0.1s ease-in-out;
 }
 .btn:hover {
@@ -169,4 +182,8 @@ footer {
 input {
   border-radius: 5px;
   padding: 2px;
+  margin-left: 5px;
+}
+input.sub-options-value {
+  width: 50px;
 }

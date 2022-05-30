@@ -28,35 +28,33 @@ public class CarControllerSimple {
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<CarSimple> create(@RequestBody CarSimple CarSimple) {
-		return new ResponseEntity<CarSimple>(this.service.create(CarSimple), HttpStatus.CREATED);
+	public ResponseEntity<CarSimple> create(@RequestBody CarSimple carSimple) {
+		return new ResponseEntity<>(this.service.create(carSimple), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/readAll")
 	public ResponseEntity<List<CarSimple>> readAll() {
-		return new ResponseEntity<List<CarSimple>>(this.service.readAll(), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.readAll(), HttpStatus.OK);
 	}
 
 	@GetMapping("/readID/{id}")
 	public ResponseEntity<CarSimple> readId(@PathVariable Long id) {
 		Optional<CarSimple> CarSimple = this.service.readId(id);
 		return CarSimple.isPresent() ? new ResponseEntity<CarSimple>(CarSimple.get(), HttpStatus.OK)
-				: new ResponseEntity<CarSimple>(HttpStatus.NOT_FOUND);
-//		return new ResponseEntity<CarSimple>(this.service.readId(id).get(), HttpStatus.OK);
+				: new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@PutMapping("/update/{id}")
 	public ResponseEntity<CarSimple> update(@PathVariable Long id, @RequestBody CarSimple newCarSimple) {
 		Optional<CarSimple> CarSimple = this.service.update(id, newCarSimple);
-		return CarSimple.isPresent() ? new ResponseEntity<CarSimple>(CarSimple.get(), HttpStatus.ACCEPTED)
-				: new ResponseEntity<CarSimple>(HttpStatus.NOT_FOUND);
+		return CarSimple.isPresent() ? new ResponseEntity<>(CarSimple.get(), HttpStatus.ACCEPTED)
+				: new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<CarSimple> delete(@PathVariable Long id) {
 		return this.service.delete(id) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		return new ResponseEntity<Boolean>(this.service.delete(id), HttpStatus.OK);
 	}
 
 }

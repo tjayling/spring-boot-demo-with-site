@@ -14,7 +14,7 @@ public interface CarRepo extends JpaRepository<Car, Long> {
 	@Query("SELECT car from Car car WHERE car.model = ?1")
 	public List<Car> readModel(String model);
 	
-	@Query(value = "SELECT * FROM Car WHERE make = ?1", nativeQuery = true)
+	@Query(value = "SELECT FROM Car WHERE make = ?1", nativeQuery = true)
 	public List<Car> readMake(String make);
 	
 	@Query(value = "SELECT * FROM Car WHERE id = ?1", nativeQuery = true)

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.qa.demo.dao.Car;
 import com.qa.demo.dto.CarDto;
@@ -48,10 +49,11 @@ public class CarService {
 
 		return this.mapToDto(this.repo.save(car));
 	}
-
-	public Boolean delete(Long id) {
-		this.repo.deleteById(id);
-		return !this.repo.existsById(id);
+	
+	@Transactional
+	public Boolean delete(List<Long> ids) {
+		this.repo.delete(ids);
+		return this.repo.exists(ids).size() == 0 ? true : false;
 	}
 
 	public List<CarDto> readId(Long id) {

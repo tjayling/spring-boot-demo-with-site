@@ -3,31 +3,65 @@
 // Global variable for the possible datalists
 let datalists = [];
 let activeDatalist;
+let readMethod = true; // true if read all(default) : false if read by
+let readVisible = true;
 
 // Runs on init
 function init() {
   // Hide the read by options on load
   document.getElementById("read-by-container").style.display = "none";
+  showOrHideDeleteButton();
   readAll();
-}
-
-// De-activates the read-all container and enables the read by options
-function activateReadBy() {
-  document.getElementById("read-all-container").style.display = "none";
-  document.getElementById("read-by-container").style.display = "block";
-  document.getElementById("read-by-select").value = "read-by";
 }
 
 // De-activates the read-by container and enables the read all select box
 function activateReadAll() {
+  readMethod = true;
   document.getElementById("read-all-container").style.display = "block";
   document.getElementById("read-by-container").style.display = "none";
   document.getElementById("read-all-select").value = "read-all";
   readAll();
 }
 
+// De-activates the read-all container and enables the read by options
+function activateReadBy() {
+  readMethod = false;
+  document.getElementById("read-all-container").style.display = "none";
+  document.getElementById("read-by-container").style.display = "block";
+  document.getElementById("read-by-select").value = "read-by";
+}
+
+function getCheckboxIds() {
+  let carCheckboxes = document.getElementsByClassName(`car-checkbox`);
+  let activeBoxes = [...carCheckboxes].filter((checkbox) => checkbox.checked);
+  return activeBoxes.length > 0
+    ? activeBoxes.map((box) => box.id.split(`-`)[1])
+    : [];
+}
+
+function showOrHideDeleteButton() {
+  let deleteButton = document.getElementById(`delete-button`);
+  getCheckboxIds().length > 0
+    ? (deleteButton.style.display = "block")
+    : (deleteButton.style.display = "none");
+}
+
+function showOrHideRead(data) {
+  if (data.length == 0) {
+    document.getElementById(`read-container`).style.display = "none";
+    document.getElementById(`no-items-message`).style.display = "block";
+
+    readVisible = false;
+  }
+  if (data.length > 0) {
+    document.getElementById(`read-container`).style.display = "block";
+    document.getElementById(`no-items-message`).style.display = "none";
+    readVisible = true;
+  }
+  console.log("Length " + data.length + " Visible " + readVisible);
+}
+
 function clearInput() {
-  console.log(document.getElementById("sub-options-value").value);
   document.getElementById("sub-options-value").value = ``;
 }
 
@@ -43,6 +77,7 @@ function readAll() {
         addListItems(data);
         /*global*/ datalists = generateDatalists(data);
         changeDatalist(activeDatalist);
+        showOrHideRead(data);
       });
     })
     .catch((error) => console.error(`Request failed: ${error}`));
@@ -63,11 +98,20 @@ function createCar() {
     .catch((error) => console.error(`Request failed: ${error}`));
 }
 
-function deleteCar(id) {
-  fetch(`http://localhost:8080/car/delete/${id}`, {
+function deleteCars() {
+  let ids = getCheckboxIds();
+  let proceed = confirm(
+    `Are you sure you want to delete cars ${ids
+      .join(`, `)
+      .replace(/, ([^,]*)$/, " and $1")}`
+  );
+
+  // TODO make sure confirm is confirmed before continuing
+
+  fetch(`http://localhost:8080/car/delete/${ids}`, {
     method: "delete",
   })
-    .then((response) => response.json())
+    .then(() => (readMethod ? readAll() : readBy()))
     .catch((error) => console.error(`Request failed: ${error}`));
 }
 
@@ -84,6 +128,8 @@ function readBy() {
       }
       response.json().then((data) => {
         addListItems(data);
+        /*global*/ datalists = generateDatalists(data);
+        changeDatalist(activeDatalist);
       });
     })
     .catch((error) => console.error(`Request failed: ${error}`));
@@ -96,6 +142,15 @@ function addListItems(data) {
     let tableRow = document.createElement(`tr`);
     newTableBody.appendChild(tableRow);
     tableRow.id = `row${data[i][`id`]}`;
+    // First add a checkbox to the item
+    let checkBox = document.createElement(`input`);
+    checkBox.type = `checkbox`;
+    checkBox.id = `car-${data[i][`id`]}`;
+    checkBox.classList.add(`car-checkbox`);
+    checkBox.addEventListener("change", () => showOrHideDeleteButton());
+
+    tableRow.appendChild(checkBox);
+    // Then iterate over the data and add data to the table
     for (let d in data[i]) {
       let tableData = document.createElement(`td`);
       if (d !== `cost`) {
@@ -105,11 +160,6 @@ function addListItems(data) {
       }
       tableRow.appendChild(tableData);
     }
-    let checkBox = document.createElement(`input`);
-    checkBox.type = `checkbox`;
-    checkBox.id = `car-${data[i][`id`]}`;
-    checkBox.onclick = showMoreOptions();
-    tableRow.appendChild(checkBox);
   }
   let oldTableBody = document.getElementById(`car-table-body`);
   oldTableBody.parentNode.replaceChild(newTableBody, oldTableBody);

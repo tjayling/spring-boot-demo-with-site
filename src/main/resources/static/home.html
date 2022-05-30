@@ -32,10 +32,17 @@
       </div>
     </header>
 
-    <main style="display: flex">
+    <main id="main" style="display: flex">
+      <section
+        id="no-items-message"
+        style="width: 250px; height: 300px; text-align: center"
+      >
+        <p>You need to create an entry to read from the database.</p>
+        <img src="./img/404.png" width = 250px>
+      </section>
       <!-- Read all cars -->
 
-      <section>
+      <section id="read-container">
         <!-- <p style="display: inline; width: auto">All cars:</p> -->
 
         <div id="read-all-container">
@@ -51,10 +58,7 @@
 
         <div id="read-by-container">
           <!-- Read all/by select box -->
-          <select
-            id="read-by-select"
-            onchange="activateReadAll()"
-          >
+          <select id="read-by-select" onchange="activateReadAll()">
             <option value="read-all">Read all cars</option>
             <option value="read-by" selected>Read cars by</option>
           </select>
@@ -72,12 +76,13 @@
             <input
               list="sub-options"
               id="sub-options-value"
+              class="text-input"
               size="10"
               placeholder="Start typing..."
               onclick="clearInput()"
             />
             <datalist id="sub-options"></datalist>
-            <button class="btn" onclick="readBy();">Select cars</button>
+            <button class="btn" onclick="readBy();">Search cars</button>
           </div>
         </div>
 
@@ -86,29 +91,49 @@
           <table>
             <thead class="table-header">
               <tr>
+                <th></th>
                 <th>ID</th>
                 <th>Model</th>
                 <th>Make</th>
                 <th>Price</th>
-                <th>Select</th>
               </tr>
             </thead>
             <tbody id="car-table-body"></tbody>
           </table>
         </div>
 
-
-
+        <!-- Delete or update options -->
+        <div class="delete-container">
+          <button onclick="deleteCars()" class="btn" id="delete-button">
+            Delete selected cars
+          </button>
+        </div>
       </section>
 
       <!-- Create new car -->
 
       <section>
         <p>Create a new car:</p>
-        <input type="text" id="get-make" placeholder="Make" /><br />
-        <input type="text" id="get-model" placeholder="Model" /> <br />
-        <input type="text" id="get-cost" placeholder="Price of car" /><br />
-        <button onclick="createCar()">Add Car</button>
+        <input
+          type="text"
+          id="get-make"
+          class="text-input"
+          placeholder="Make"
+        /><br />
+        <input
+          type="text"
+          id="get-model"
+          class="text-input"
+          placeholder="Model"
+        />
+        <br />
+        <input
+          type="text"
+          id="get-cost"
+          class="text-input"
+          placeholder="Price"
+        /><br />
+        <button class="btn" onclick="createCar()">Add Car</button>
       </section>
     </main>
     <script src="script.js"></script>

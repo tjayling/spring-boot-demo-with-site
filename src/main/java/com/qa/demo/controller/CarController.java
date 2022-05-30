@@ -51,9 +51,10 @@ public class CarController {
 		return new ResponseEntity<>(this.service.update(newCar), HttpStatus.ACCEPTED);
 	}
 
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Boolean> delete(@PathVariable Long id) {
-		return this.service.delete(id) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+	@DeleteMapping("/delete/{ids}")
+	public ResponseEntity<Boolean> delete(@PathVariable List<Long> ids) {
+		
+		return this.service.delete(ids) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
 				: new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 

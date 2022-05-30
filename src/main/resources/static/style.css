@@ -31,15 +31,6 @@ body {
   /* color: #e46fb3; */
 }
 
-select {
-  font-family: "Koulen", cursive;
-  top: -10px;
-  background-color: lightgrey;
-  text-align: center;
-  border-radius: 5px;
-  padding:0;
-  border-radius: 5px;
-}
 
 section {
   margin: 25px;
@@ -68,7 +59,9 @@ div.car-table-container {
   height: 300px;
   overflow: auto;
   border-radius: 5px;
+  margin-bottom: 5px;
 }
+
 
 h1 {
   font-family: "Antic Slab", serif;
@@ -139,9 +132,12 @@ footer {
 }
 
 .btn {
-  display: inline-block;
+  font-family: "Koulen", cursive;
   position: relative;
-  padding: 2px;
+  padding: 0 5px;
+  height: 25px;
+  top: 1px;
+  margin: 5px 0 7px 0;
   border-radius: 5px;
   text-decoration: none;
   outline-style: solid;
@@ -150,6 +146,7 @@ footer {
 }
 .btn:hover {
   transform: scale(1.05);
+  background-color: #75757579;
 }
 .btn:active {
   transform: scale(0.9);
@@ -157,7 +154,6 @@ footer {
 
 .btn.nav {
   margin: 10px 0 0 10px;
-  padding: 0 5px 0 5px;
   background-color: #e46fb338;
   color: #e46fb3;
   outline-style: none;
@@ -166,23 +162,26 @@ footer {
 .btn.footer {
   outline-style: none;
 }
-.btn.footer:hover {
-  background-color: #75757538;
-}
 
-.btn.del {
-  background-color: #f86c6c;
-  color: white;
-  /* display: block; */
-}
-.btn.del:hover {
-  background-color: #eeeeee;
-}
-
-input {
+input.text-input {
   border-radius: 5px;
-  padding: 2px;
+  height: 21px;
+  border: solid 2px;
+  padding-left: 3px;
 }
+
 input.sub-options-value {
   width: 50px;
+  border: solid 2px;
+}
+
+select {
+  font-family: "Koulen", cursive;
+  top: -10px;
+  background-color: lightgrey;
+  text-align: center;
+  border-radius: 5px;
+  padding: 0;
+  border: solid 2px;
+  height: 25px
 }
